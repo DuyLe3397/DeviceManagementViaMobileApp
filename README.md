@@ -1,11 +1,11 @@
 # SmartLight - Ứng dụng Điều khiển Đèn Thông minh
 
-Ứng dụng React Native để điều khiển đèn LED thông qua ESP32
+Ứng dụng React Native để điều khiển đèn LED, quạt và nhận dữ liệu nhiệt độ, độ ẩm thông qua ESP32
 
 ## 📋 Yêu cầu hệ thống
 
 - **Node.js** (phiên bản 16 trở lên)
-- **npm** hoặc **yarn**
+- **npm** hoặc **yarn** hoặc **npx**
 - **Expo CLI**
 
 ## 🚀 Cài đặt
