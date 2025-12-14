@@ -66,7 +66,7 @@ npm run web
 
 API endpoint được cấu hình trong `hooks/useLightControl.js`:
 ```javascript
-const ESP32_API_URL = 'https://api.helpass.io.vn';
+const ESP32_BASE_URL = 'http://192.168.1.3';  
 ```
 
 ## 📱 Tính năng
