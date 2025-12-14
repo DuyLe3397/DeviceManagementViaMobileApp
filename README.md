@@ -72,7 +72,9 @@ const ESP32_BASE_URL = 'http://192.168.1.3';
 ## 📱 Tính năng
 
 - ✅ Bật/tắt đèn LED thông qua ESP32
+- ✅ Bật/tắt quạt thông qua ESP32
 - ✅ Hiển thị trạng thái đèn real-time
+- ✅ Refresh lại trang để lấy trạng thái hiện tại của LED, quạt, nhiệt độ, độ ẩm và tình trạng kết nối
 - ✅ Hiệu ứng thay đổi nền theo trạng thái đèn
 - ✅ Icon đèn động
 - ✅ Xử lý lỗi kết nối
