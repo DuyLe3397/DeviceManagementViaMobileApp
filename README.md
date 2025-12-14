@@ -1,4 +1,4 @@
-# SmartLight - Ứng dụng Điều khiển Đèn Thông minh
+# SmartHome - Ứng dụng quản lý các thiết bị IOT trong nhà thông minh
 
 Ứng dụng React Native để điều khiển đèn LED, quạt và nhận dữ liệu nhiệt độ, độ ẩm thông qua ESP32
 
@@ -21,7 +21,7 @@ npm install -g expo-cli
 ### 3. Cài đặt dependencies
 Di chuyển vào thư mục project và chạy:
 ```bash
-cd smartlight
+cd smarthome
 npm install
 ```
 
@@ -32,13 +32,15 @@ yarn install
 
 ## 📦 Các thư viện chính
 
-- **expo** (~54.0.27) - Framework React Native
+- **expo** (~54.0.29) - Framework React Native
 - **react** (19.1.0) - Core React
 - **react-native** (0.81.5) - Core React Native
 - **axios** (^1.13.2) - HTTP client để gọi API
 - **@expo/vector-icons** (^15.0.3) - Icons library
 - **expo-status-bar** (~3.0.9) - Status bar component
 - **react-native-web** (~0.21.0) - Hỗ trợ chạy trên web
+- **react-dom** (~19.1.0) - Cung cấp các phương thức để tương tác với DOM trong ứng dụng React
+- **react-native-linear-gradient** (~2.8.3) - Cho phép tạo các gradient (chuyển sắc) trên các component trong ứng dụng React Native
 
 ## ▶️ Chạy ứng dụng
 
@@ -64,7 +66,7 @@ npm run web
 
 ## 🔧 Cấu hình
 
-API endpoint được cấu hình trong `hooks/useLightControl.js`:
+API endpoint được cấu hình trong `hooks/useControl.js`:
 ```javascript
 const ESP32_BASE_URL = 'http://192.168.1.3';  
 ```
@@ -93,14 +95,14 @@ Trước khi sử dụng, cần phải cập nhật địa chỉ IP của thiế
 
 - Để sử dụng hook này, có thể import và gọi nó trong một component:
 ```bash
-import { useLightControl } from './hooks/useLightControl';
+import { useControl } from './hooks/useControl';
 
 const MyComponent = () => {
   const {
     isOn, isFanOn, temperature, humidity, isOnline, lastUpdated,
     isLoading, isRefreshing, error,
     toggleLight, toggleFan, refreshState, checkOnline,
-  } = useLightControl();
+  } = useControl();
 
   // Sử dụng các giá trị và hàm trong component
   return (
@@ -122,23 +124,56 @@ const MyComponent = () => {
 ```
 ## 🌐 API Endpoints
 
-- `POST https://api.helpass.io.vn/led` - Điều khiển đèn
+- `POST http://192.168.1.3/led` - Điều khiển đèn
   ```json
   {
     "state": "ON" | "OFF"
   }
   ```
-
+- `POST http://192.168.1.3/fan` - Điều khiển quạt
+  ```json
+  {
+    "state": "ON" | "OFF"
+  }
+  ```
+- `GET http://192.168.1.3/status` - Lấy trạng thái thiết bị
+  ```json
+  {
+  "success": true,
+  "data": {
+    "status_led": "ON" | "OFF",
+    "status_fan": "ON" | "OFF",
+    "temperature": 25.5,
+    "humidity": 60,
+    "is_online": true
+    }
+  }
+  ```
+- `GET http://192.168.1.3/is_online` - Kiểm tra trạng thái online
+  ```json
+  {
+    "online": true
+  }
+  ```
+- `PUT http://192.168.1.3/update` - Cập nhật trạng thái thiết bị
+  ```json
+  {
+  "status_led": "ON" | "OFF",
+  "status_fan": "ON" | "OFF",
+  "temperature": 25.5,
+  "humidity": 60
+  }
+  ```
 ## 📁 Cấu trúc thư mục
 
 ```
-smartlight/
+smarthome/
 ├── App.js              # Component chính
 ├── index.js            # Entry point
 ├── package.json        # Dependencies
 ├── app.json           # Expo config
 ├── hooks/
-│   └── useLightControl.js  # Custom hook điều khiển đèn
+│   └── useControl.js  # Custom hook điều khiển, lấy dữ liệu
 └── assets/            # Hình ảnh, fonts, etc.
 ```
 
@@ -146,7 +181,7 @@ smartlight/
 
 ### Lỗi "Cannot connect to ESP32"
 - Kiểm tra kết nối internet
-- Đảm bảo server ESP32 đang chạy tại https://api.helpass.io.vn
+- Đảm bảo server ESP32 đang kết nối mạng
 
 ### Lỗi khi chạy `npm install`
 ```bash
@@ -163,6 +198,4 @@ npm install -g expo-cli@latest
 
 ## 📝 Ghi chú
 
-- Ứng dụng kết nối đến ESP32 simulator được host tại https://api.helpass.io.vn
-- Có thể chạy trên Android, iOS và Web browser
 - Sử dụng Expo managed workflow để dễ dàng phát triển và deploy
